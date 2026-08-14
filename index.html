@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Química II | Clase 7: Equilibrios Ácido-Base y pH</title>
+
+<!-- Carga de MathJax -->
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+    :root {
+        --QII-gold: #D97706; --QII-dark: #022C22; --QII-blue: #064E3B; --QII-light: #10B981;
+        --accent: #DC2626; --accent-orange: #F59E0B; --accent-purple: #7C3AED;
+        --text: #111827; --white: #ffffff; --sand: #FEF3C7; --shadow: rgba(0, 0, 0, 0.25);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ul:not(.map-tree), ol { padding-left: 2.4rem; margin: 0.5rem 0 1rem; }
+    ul:not(.map-tree) { list-style: none; }
+    ul:not(.map-tree) li, ol li { margin: 0.45rem 0; }
+
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+    header { background: linear-gradient(135deg, var(--QII-dark) 0%, var(--QII-blue) 100%); color: var(--white); padding: 2rem; text-align: center; box-shadow: 0 6px 20px var(--shadow); position: relative; overflow: hidden; border-bottom: 5px solid var(--QII-gold); }
+    .logo-container { display: flex; align-items: center; justify-content: center; gap: 2rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .logo-qii { width: 120px; height: auto; background: var(--white); border-radius: 50%; padding: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+    h1 { font-size: 2.5rem; margin-bottom: 0.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); color: var(--QII-gold); }
+    .subtitle { font-size: 1.2rem; opacity: 0.95; font-weight: 300; }
+    .nav-container { background: var(--QII-dark); padding: 1rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 12px var(--shadow); border-bottom: 2px solid var(--QII-gold); }
+    .nav-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.8rem; max-width: 1400px; margin: 0 auto; }
+    .nav-btn { background: var(--QII-blue); color: var(--white); border: 1px solid var(--QII-gold); padding: 0.8rem 1.5rem; border-radius: 25px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 3px 8px rgba(0,0,0,0.2); font-size: 0.95rem; }
+    .nav-btn:hover, .nav-btn.active { background: var(--QII-gold); color: var(--QII-dark); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(234, 179, 8, 0.4); }
+    .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+    .section { display: none; animation: fadeIn 0.5s ease; }
+    .section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .card { background: var(--white); border-radius: 16px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 8px 24px var(--shadow); border-left: 6px solid var(--QII-gold); transition: transform 0.3s ease; }
+    .card:hover { transform: translateY(-3px); }
+    h2 { color: var(--QII-blue); margin-bottom: 1.5rem; padding-bottom: 0.8rem; border-bottom: 3px solid var(--QII-gold); display: flex; align-items: center; gap: 0.8rem; font-size: 2rem; }
+    h3 { color: var(--QII-light); margin: 1.5rem 0 1rem; font-size: 1.5rem; }
+    p { margin-bottom: 1rem; }
+    .molecule-img { max-width: 100%; max-height: 450px; height: auto; border-radius: 12px; margin: 1rem 0; box-shadow: 0 4px 12px var(--shadow); object-fit: contain; }
+    .img-container { text-align: center; margin: 2rem 0; background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px dashed var(--QII-gold); }
+    .img-caption { font-style: italic; color:#666; margin-top: 0.5rem; font-size: 0.95rem; }
+    .calculator { background: linear-gradient(135deg, #fefcbf 0%, #fef3c7 100%); border: 3px solid var(--QII-gold); border-radius: 16px; padding: 2rem; margin: 2rem 0; }
+    .calc-title { color: var(--QII-dark); font-size: 1.6rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem; font-weight: bold; }
+    .calc-input-group { margin: 1rem 0; }
+    .calc-input-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--QII-dark); }
+    .calc-input-group input, .calc-input-group select { width: 100%; padding: 0.8rem; border: 2px solid var(--QII-gold); border-radius: 8px; font-size: 1rem; transition: border-color 0.3s; background: #fff; }
+    .calc-input-group input:focus, .calc-input-group select:focus { outline: none; border-color: var(--QII-blue); }
+    .calc-button { background: var(--QII-dark); color: var(--QII-gold); border: 2px solid var(--QII-gold); padding: 1rem 2rem; border-radius: 30px; font-size: 1.1rem; font-weight: 600; cursor: pointer; margin-top: 1rem; transition: all 0.3s ease; box-shadow: 0 4px 12px var(--shadow); }
+    .calc-button:hover { background: var(--QII-gold); color: var(--QII-dark); transform: translateY(-2px); }
+    .calc-result { background: var(--white); border-left: 5px solid var(--accent); padding: 1.5rem; margin-top: 1.5rem; border-radius: 8px; font-size: 1.1rem; display: none; }
+    .calc-result.show { display: block; animation: slideIn 0.5s ease; }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+    table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px var(--shadow); }
+    th { background: linear-gradient(135deg, var(--QII-dark) 0%, var(--QII-blue) 100%); color: var(--QII-gold); padding: 1.2rem; text-align: left; font-weight: 600; }
+    td { padding: 1rem 1.2rem; border-bottom: 1px solid #e2e8f0; transition: background 0.3s; }
+    tr:hover td { background: #fefcbf; }
+    .info-box { background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%); border-left: 5px solid #3182ce; padding: 1.5rem; margin: 1.5rem 0; border-radius: 0 12px 12px 0; }
+    .tip-box { background: linear-gradient(135deg, #fefcbf 0%, #fef3c7 100%); border-left: 5px solid var(--QII-gold); padding: 1.5rem; margin: 1.5rem 0; border-radius: 0 12px 12px 0; }
+    .bio-box { background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%); border-left: 5px solid #319795; padding: 1.5rem; margin: 1.5rem 0; border-radius: 0 12px 12px 0; }
+    .pharma-box { background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%); border-left: 5px solid var(--accent); padding: 1.5rem; margin: 1.5rem 0; border-radius: 0 12px 12px 0; }
+    .problem-box { background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%); border-left: 5px solid #38a169; padding: 1.5rem; margin: 1.5rem 0; border-radius: 0 12px 12px 0; }
+    details.solution { margin-top: 1rem; background: #f8fafc; border: 2px solid var(--QII-light); border-radius: 10px; padding: 0.8rem 1.2rem; }
+    details.solution summary { cursor: pointer; font-weight: 700; color: var(--QII-blue); }
+    details.solution[open] summary { margin-bottom: 0.8rem; border-bottom: 1px dashed var(--QII-light); padding-bottom: .4rem; }
+    .mnemonic-card { background: linear-gradient(135deg, #fff5f5 0%, #feebc8 100%); border: 3px solid var(--accent-orange); border-radius: 12px; padding: 1.5rem; margin: 1rem 0; position: relative; overflow: hidden; }
+    .mnemonic-title { color: var(--accent-orange); font-weight: 700; margin-bottom: 0.8rem; font-size: 1.2rem; }
+    .glossary-term { background: var(--white); border: 2px solid var(--QII-gold); border-radius: 8px; padding: 1rem; margin: 0.8rem 0; cursor: pointer; transition: all 0.3s; }
+    .glossary-term:hover { background: #fefcbf; transform: translateX(5px); }
+    .glossary-definition { display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--QII-gold); }
+    .glossary-definition.show { display: block; animation: fadeIn 0.3s ease; }
+    .error-card { background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%); border-left: 5px solid var(--accent); padding: 1.5rem; margin: 1rem 0; border-radius: 0 12px 12px 0; }
+    .error-title { color: var(--accent); font-weight: 700; margin-bottom: 0.5rem; }
+    .correction { background: #c6f6d5; border-left: 3px solid #38a169; padding: 1rem; margin-top: 1rem; border-radius: 0 8px 8px 0; }
+    .quiz-container { background: linear-gradient(135deg, var(--QII-dark) 0%, var(--QII-blue) 100%); color: var(--white); border-radius: 16px; padding: 2rem; margin: 2rem 0; border: 3px solid var(--QII-gold); }
+    .quiz-question-card { background: rgba(255, 255, 255, 0.08); border: 1px solid var(--QII-gold); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .quiz-question { font-size: 1.2rem; margin-bottom: 1rem; font-weight: 600; color: var(--QII-gold); }
+    .quiz-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.8rem; }
+    .quiz-option { background: var(--white); color: var(--text); border: 2px solid transparent; padding: 0.9rem 1.2rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-weight: 500; text-align: left; }
+    .quiz-option:hover:not(:disabled) { border-color: var(--QII-gold); transform: translateY(-2px); }
+    .quiz-option:disabled { cursor: not-allowed; opacity: 0.9; }
+    .quiz-option.correct { background: #38a169; color: white; border-color: #22543d; }
+    .quiz-option.incorrect { background: #e53e3e; color: white; border-color: #742a2a; }
+    .quiz-explanation { margin-top: 0.8rem; padding: 0.8rem; background: rgba(255,255,255,0.15); border-radius: 6px; font-size: 0.95rem; color: #fff; display: none; }
+    .quiz-progress { max-width: 720px; margin: 0 auto 1rem; }
+    .quiz-progress-bar-bg { height: 10px; background: #e2e8f0; border-radius: 5px; overflow: hidden; }
+    .quiz-progress-bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--QII-gold), var(--accent-orange)); transition: width 0.4s; }
+    .quiz-stats { display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center; margin: 1rem 0; }
+    .quiz-stat { padding: 0.6rem 1.2rem; border-radius: 20px; font-weight: 700; color: #fff; font-size: 0.95rem; background: var(--QII-light); }
+    .footer { background: var(--QII-dark); color: var(--white); text-align: center; padding: 2.5rem; margin-top: 3rem; border-top: 5px solid var(--QII-gold); }
+    .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; border-radius: 12px; box-shadow: 0 4px 12px var(--shadow); }
+    .table-responsive table { min-width: 600px; width: 100%; margin: 0; }
+    .tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .tab { background: #e2e8f0; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+    .tab.active { background: var(--QII-gold); color: var(--QII-dark); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.5s ease; }
+    .fc-stats { display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center; margin: 1rem 0; }
+    .fc-stat { padding: 0.6rem 1.2rem; border-radius: 20px; font-weight: 700; color: #fff; font-size: 0.95rem; }
+    .fc-stat.good { background: #38a169; } .fc-stat.bad { background: #e53e3e; } .fc-stat.pending { background: #4a5568; } .fc-stat.total { background: var(--QII-blue); }
+    .fc-progress { height: 10px; background: #e2e8f0; border-radius: 5px; overflow: hidden; max-width: 720px; margin: 0 auto 1.5rem; }
+    .fc-progress-bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--QII-gold), var(--accent)); transition: width 0.4s; }
+    .flashcard-scene { perspective: 1400px; max-width: 720px; height: 320px; margin: 0 auto 1.5rem; }
+    .flashcard { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.6s; cursor: pointer; }
+    .flashcard.flipped { transform: rotateY(180deg); }
+    .fc-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 16px; padding: 2rem; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; overflow: auto; box-shadow: 0 8px 24px var(--shadow); font-size: 1.15rem; }
+    .fc-front { background: linear-gradient(135deg, var(--QII-dark), var(--QII-blue)); color: #fff; border: 3px solid var(--QII-gold); }
+    .fc-back { background: linear-gradient(135deg, #fff, #fefcbf); color: var(--text); border: 3px solid var(--QII-gold); transform: rotateY(180deg); }
+    .fc-label { font-size: 0.85rem; letter-spacing: 2px; font-weight: 800; color: var(--QII-gold); margin-bottom: 1rem; }
+    .fc-hint { margin-top: 1rem; font-size: 0.85rem; opacity: 0.8; font-style: italic; }
+    .fc-controls { display: flex; gap: 1rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
+    .fc-btn { border: none; padding: 0.9rem 2rem; border-radius: 30px; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: all 0.3s; color: #fff; }
+    .fc-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .fc-btn.good { background: #38a169; } .fc-btn.bad { background: #e53e3e; }
+    .fc-btn:not(:disabled):hover { transform: translateY(-3px); }
+    .map-container { overflow-x: auto; padding: 1rem 0; }
+    .map-tree, .map-tree ul { list-style: none; margin: 0; padding-left: 0; }
+    .map-tree ul { display: none; padding-left: 1.6rem; margin: 0.6rem 0 0; border-left: 3px solid var(--QII-gold); }
+    .map-tree li.open > ul { display: block; animation: fadeIn 0.4s ease; }
+    .map-tree li { margin: 0.4rem 0; }
+    .map-node { display: inline-block; background: var(--QII-dark); color: #fff; padding: 0.6rem 1.1rem; border-radius: 10px; cursor: pointer; font-weight: 600; transition: all 0.3s; border: 1px solid var(--QII-gold); }
+    .map-node:hover { background: var(--QII-gold); color: var(--QII-dark); transform: translateX(4px); }
+    .map-node.root { background: var(--accent); color: white; font-size: 1.15rem; border: none; }
+    .map-node.branch { background: var(--QII-blue); }
+    .map-leaf { display: inline-block; background: #fff; color: var(--text); padding: 0.45rem 0.9rem; border-radius: 8px; font-size: 0.95rem; border: 2px solid var(--QII-gold); }
+    li.has-children > .map-node::before { content: '▶ '; font-size: 0.8em; }
+    li.has-children.open > .map-node::before { content: '▼ '; font-size: 0.8em; }
+
+    @media (max-width: 768px) {
+        h1 { font-size: 1.8rem; } h2 { font-size: 1.5rem; } h3 { font-size: 1.2rem; }
+        .logo-container { flex-direction: column; gap: 1rem; } .logo-qii { width: 80px; }
+        .container { padding: 1rem; } .card { padding: 1.5rem; }
+        .nav-buttons { gap: 0.5rem; } .nav-btn { padding: 0.6rem 1rem; font-size: 0.75rem; }
+        .quiz-options { grid-template-columns: 1fr; }
+        .tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 0.5rem; }
+        .tab { flex-shrink: 0; padding: 0.6rem 1rem; font-size: 0.9rem; }
+        .flashcard-scene { height: 360px; } .fc-face { font-size: 1rem; padding: 1rem; }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <!-- LOGO: Usar el mismo archivo Logo-QII.png -->
+        <img src="Logo-QII.png" alt="Logo QII" class="logo-qii">
+        <div>
+            <h1>QUÍMICA II</h1>
+            <p class="subtitle">Unidad 3: Equilibrios</p>
+            <p class="subtitle">Clase 7: Equilibrios Ácido-Base, pH y Ácidos Polipróticos</p>
+        </div>
+    </div>
+</header>
+
+<nav class="nav-container">
+    <div class="nav-buttons">
+        <button class="nav-btn active" onclick="showSection('inicio', this)">🏠 Inicio</button>
+        <button class="nav-btn" onclick="showSection('conceptos', this)">📚 Conceptos</button>
+        <button class="nav-btn" onclick="showSection('mapa', this)">🗺️ Mapa</button>
+        <button class="nav-btn" onclick="showSection('flashcards', this)">🃏 Flashcards</button>
+        <button class="nav-btn" onclick="showSection('calculadoras', this)">🧮 Herramientas</button>
+        <button class="nav-btn" onclick="showSection('aplicaciones', this)">🏥 Aplicaciones</button>
+        <button class="nav-btn" onclick="showSection('mnemotecnias', this)">🧠 Mnemotecnias</button>
+        <button class="nav-btn" onclick="showSection('glosario', this)">📖 Glosario</button>
+        <button class="nav-btn" onclick="showSection('errores', this)">⚠️ Errores</button>
+        <button class="nav-btn" onclick="showSection('bibliografia', this)">📚 Bibliografía</button>
+        <button class="nav-btn" onclick="showSection('quiz', this)">🎯 Quiz</button>
+    </div>
+</nav>
+
+<div class="container">
+
+<!-- ============ INICIO ============ -->
+<section id="inicio" class="section active">
+    <div class="card">
+        <h2>🎯 Resultados del Aprendizaje</h2>
+        <div class="info-box">
+            <ul style="font-size: 1.1rem; line-height: 2;">
+                <li>✓ Reconocer la diferencia entre ácidos y bases fuertes y débiles.</li>
+                <li>✓ Interpretar y utilizar la escala de pH para clasificar soluciones como ácidas, básicas o neutras.</li>
+                <li>✓ Calcular el pH de soluciones de ácidos y bases fuertes a partir de su concentración molar.</li>
+                <li>✓ Identificar ácidos y bases débiles y realizar cálculos de pH, pOH y porcentaje de disociación.</li>
+                <li>✓ Calcular las concentraciones de iones hidrógeno e hidróxido en soluciones de ácidos y bases débiles.</li>
+                <li>✓ Identificar ácidos polipróticos y calcular el pH y concentraciones de todas las especies en solución.</li>
+            </ul>
+        </div>
+
+        <h3>🔬 Relevancia Profesional</h3>
+        <div class="bio-box">
+            <div><strong>¿Por qué el estudiante de salud debe dominar los Equilibrios Ácido-Base?</strong>
+                <ul style="font-size: 1rem; margin-top: 1rem;">
+                    <li>• <strong>Fisiología Médica:</strong> El pH sanguíneo debe mantenerse en un rango estrecho (7.35 - 7.45). Desviaciones causan acidosis o alcalosis, que pueden ser fatales. El sistema de equilibrios buffer (que depende de ácidos débiles como el $H_2CO_3$) es crucial para la vida.</li>
+                    <li>• <strong>Farmacia:</strong> La ionización de un fármaco (dada por su $K_a$ y el pH del medio) determina su absorción en el tracto gastrointestinal. Muchos fármacos son ácidos o bases débiles.</li>
+                    <li>• <strong>Odontología:</strong> La desmineralización del esmalte dental ocurre cuando el pH de la placa baja de 5.5 debido a la fermentación bacteriana de azúcares, un ejemplo directo de la acción de ácidos débiles orgánicos.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ CONCEPTOS ============ -->
+<section id="conceptos" class="section">
+    <div class="card">
+        <h2>📚 Conceptos Clave: Equilibrios Ácido-Base</h2>
+        <div id="conceptos-tabs" class="tab-group">
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('conceptos-tabs','sub-fuerza', this)">⚖️ Fuerza</button>
+                <button class="tab" onclick="showTab('conceptos-tabs','sub-agua', this)">💧 Autoionización</button>
+                <button class="tab" onclick="showTab('conceptos-tabs','sub-ph', this)">🌡️ Escala pH</button>
+                <button class="tab" onclick="showTab('conceptos-tabs','sub-fuertes', this)">💪 Fuertes</button>
+                <button class="tab" onclick="showTab('conceptos-tabs','sub-debiles', this)">🪫 Débiles</button>
+                <button class="tab" onclick="showTab('conceptos-tabs','sub-polipro', this)">🧬 Polipróticos</button>
+            </div>
+
+            <!-- SUB: FUERZA -->
+            <div id="sub-fuerza" class="tab-content active">
+                <h3>⚖️ Fuerza de Ácidos y Bases</h3>
+                <div class="info-box">
+                    <p>La fuerza de un ácido depende de varios factores: propiedades del disolvente, temperatura y <strong>estructura molecular</strong>. Dependiendo de la estructura, se clasifican en <strong>binarios</strong> (hidrácidos) y <strong>ternarios</strong> (oxácidos).</p>
+                </div>
+                
+                <h3>Ácidos Binarios (HX)</h3>
+                <p>La fuerza depende de la <strong>polaridad</strong> y la <strong>energía de enlace H-X</strong>. Un enlace más polar facilita la ionización en $H^+$ y $X^-$, pero enlaces fuertes se ionizan menos.</p>
+                
+                <div class="tip-box">
+                    <strong>En un Grupo (vertical):</strong> Prevalece la energía de enlace. Al bajar, el enlace se rompe más fácil.<br>
+                    $$HF < HCl < HBr < HI$$<br>
+                    En agua, HF es débil; HCl, HBr y HI son igual de fuertes (efecto nivelador del agua).<br>
+                    $$H_2O < H_2S < H_2Se < H_2Te$$                 </div>
+                <div class="tip-box">
+                    <strong>En un Periodo (horizontal):</strong> Prevalece la polaridad (electronegatividad).<br>
+                    Período 2: $CH_4 < NH_3 < H_2O < HF$<br>
+                    Período 3: $SiH_4 < PH_3 < H_2S < HCl$                 </div>
+
+                <h3>Ácidos Ternarios (Oxácidos)</h3>
+                <p>1. <strong>Mismo grupo, mismo número de oxidación:</strong> La fuerza aumenta con la electronegatividad del átomo central. Ej: $HClO_4 > HBrO_4$ (Cl atrae más la densidad electrónica del O, debilitando el enlace O-H y facilitando la ionización).</p>
+                <p>2. <strong>Mismo átomo central, diferente oxidación:</strong> La fuerza aumenta con el número de grupos O enlazados (número de oxidación). Ej: $HClO_4 > HClO_3 > HClO_2 > HClO$</p>
+
+                <div class="img-container">
+                    <!-- IMAGEN SOLICITADA 1: Tabla periódica con flechas mostrando el aumento de acidez en grupo y en periodo para hidrácidos -->
+                    <img src="clase7-fuerza-acidos-tabla.jpg" alt="Fuerza de ácidos binarios en tabla periódica" class="molecule-img">
+                    <p class="img-caption">Figura 1: Tendencias de acidez de hidrácidos en la tabla periódica.</p>
+                </div>
+
+                <h3>Bases Fuertes vs Débiles</h3>
+                <div class="info-box">
+                    <p><strong>Bases Fuertes:</strong> Hidróxidos iónicos de metales alcalinos (Grupo IA) y alcalinotérreos (Grupo IIA, excepto Be). Ej: LiOH, NaOH, KOH, Ca(OH)₂. Se disocian totalmente.</p>
+                    <p><strong>Bases Débiles:</strong> Compuestos moleculares derivados del amoniaco ($NH_3$). Ej: Metilamina ($CH_3NH_2$), Piridina ($C_5H_5N$), Anilina ($C_6H_5NH_2$). Se ionizan parcialmente.</p>
+                </div>
+
+                <h3>Fuerza de la Base Conjugada</h3>
+                <p>El ácido más fuerte presenta la base conjugada más débil. Por tanto, para buscar la base más fuerte, buscamos el ácido más débil en su par conjugado.</p>
+                <div class="problem-box">
+                    <p><strong>Ejemplo:</strong> ¿Cuál es la base de Bronsted más fuerte? a) Cl⁻ b) ClO₃⁻ c) ClO⁻ d) NO₃⁻ e) Br⁻</p>
+                    <details class="solution">
+                        <summary>Ver solución</summary>
+                        <p>Buscamos el ácido más débil del conjunto: HCl (fuerte), HClO₃ (fuerte), <strong>HClO (débil)</strong>, HNO₃ (fuerte), HBr (fuerte).</p>
+                        <p>Como HClO es el ácido más débil, su base conjugada <strong>ClO⁻ (opción c)</strong> es la base más fuerte.</p>
+                    </details>
+                </div>
+            </div>
+
+            <!-- SUB: AUTOIONIZACIÓN -->
+            <div id="sub-agua" class="tab-content">
+                <h3>💧 Autoionización del Agua</h3>
+                <div class="info-box">
+                    <p>El agua es una molécula <strong>anfiprótica</strong> (puede actuar como ácido o base). En agua pura, ocurre el equilibrio:</p>
+                    $$H_2O(l) + H_2O(l) \rightleftharpoons H_3O^+(ac) + OH^-(ac)$$                 </div>
+                <p>La constante de equilibrio para este proceso se llama <strong>constante del producto iónico del agua ($K_w$)</strong>:</p>
+                <div class="tip-box">
+                    $$K_w = [H_3O^+][OH^-] = 1.0 \times 10^{-14} \text{ (a 25°C)}$$                     <p>En agua pura: $[H_3O^+] = [OH^-] = 1.0 \times 10^{-7} M$</p>
+                </div>
+                <div class="img-container">
+                    <!-- IMAGEN SOLICITADA 2: Esquema molecular de la transferencia de protón entre dos moléculas de agua -->
+                    <img src="clase7-autoionizacion-agua.jpg" alt="Autoionización del agua" class="molecule-img">
+                    <p class="img-caption">Figura 2: Transferencia de protón entre dos moléculas de agua formando $H_3O^+$ y $OH^-$.</p>
+                </div>
+            </div>
+
+            <!-- SUB: pH -->
+            <div id="sub-ph" class="tab-content">
+                <h3>🌡️ La Escala de pH y pOH</h3>
+                <p>El pH es el logaritmo negativo de la concentración de iones hidronio, una medida directa del grado de acidez:</p>
+                <div class="tip-box">
+                    $$pH = -\log[H_3O^+]$$                     $$pOH = -\log[OH^-]$$                     <strong>Relación fundamental a 25°C:</strong>
+                    $$pH + pOH = 14$$                 </div>
+                <div class="info-box">
+                    <ul>
+                        <li><strong>Disoluciones ácidas:</strong> $[H_3O^+] > 1 \times 10^{-7} M \Rightarrow pH < 7$</li>
+                        <li><strong>Disoluciones neutras:</strong> $[H_3O^+] = 1 \times 10^{-7} M \Rightarrow pH = 7$</li>
+                        <li><strong>Disoluciones básicas:</strong> $[H_3O^+] < 1 \times 10^{-7} M \Rightarrow pH > 7$</li>
+                    </ul>
+                </div>
+                <div class="img-container">
+                    <!-- IMAGEN SOLICITADA 3: Escala de pH con colores de indicador universal mostrando sustancias comunes (jugo limón, sangre, lejía) -->
+                    <img src="clase7-escala-ph-indicador.jpg" alt="Escala de pH con indicador universal" class="molecule-img">
+                    <p class="img-caption">Figura 3: Escala de pH y colores del indicador universal.</p>
+                </div>
+            </div>
+
+            <!-- SUB: FUERTES -->
+            <div id="sub-fuertes" class="tab-content">
+                <h3>💪 Ácidos y Bases Fuertes</h3>
+                <p>Se disocian <strong>totalmente</strong> en solución. La concentración de $H_3O^+$ o $OH^-$ es igual a la concentración inicial del ácido/base (considerando la estequiometría).</p>
+                
+                <div class="info-box">
+                    <strong>Ácidos Fuertes Comunes:</strong> HCl, HBr, HI, HNO₃, HClO₃, HClO₄, H₂SO₄ (1ra disociación).<br>
+                    <strong>Bases Fuertes Comunes:</strong> LiOH, NaOH, KOH, Ca(OH)₂, Sr(OH)₂, Ba(OH)₂.
+                </div>
+
+                <div class="problem-box">
+                    <p><strong>Ejercicio 1:</strong> ¿Cuál debe ser el pH de una solución HCl que se prepara mezclando 2 mL de solución concentrada de HCl al 35% en masa y densidad 1,19 g/mL hasta formar 500 ml de solución?</p>
+                    <details class="solution">
+                        <summary>Ver desarrollo matemático</summary>
+                        <p>1. Calcular masa de HCl: $m = V \times d \times \% = 2 \text{ mL} \times 1.19 \text{ g/mL} \times 0.35 = 0.833 \text{ g HCl}$</p>
+                        <p>2. Calcular moles: $n = 0.833 \text{ g} / 36.5 \text{ g/mol} = 0.0228 \text{ mol}$</p>
+                        <p>3. Calcular Molaridad: $M = 0.0228 \text{ mol} / 0.5 \text{ L} = 0.0457 \text{ M}$</p>
+                        <p>4. Calcular pH: $pH = -\log(0.0457) = \mathbf{1.34}$</p>
+                    </details>
+                </div>
+
+                <div class="problem-box">
+                    <p><strong>Ejercicio 2:</strong> Se mezcla 25 mL de solución de HNO₃ de pH 2,12 con 100 mL de agua. ¿Cuál será el pH de la solución resultante?</p>
+                    <details class="solution">
+                        <summary>Ver desarrollo matemático</summary>
+                        <p>1. $[H_3O^+]_{inicial} = 10^{-2.12} = 7.59 \times 10^{-3} \text{ M}$</p>
+                        <p>2. Moles iniciales: $M \times V = 7.59 \times 10^{-3} \text{ mol/L} \times 0.025 \text{ L} = 1.89 \times 10^{-4} \text{ mol}$</p>
+                        <p>3. Nuevo volumen = 125 mL = 0.125 L</p>
+                        <p>4. Nueva $[H_3O^+] = 1.89 \times 10^{-4} / 0.125 = 1.51 \times 10^{-3} \text{ M}$</p>
+                        <p>5. $pH = -\log(1.51 \times 10^{-3}) = \mathbf{2.82}$</p>
+                    </details>
+                </div>
+
+                <div class="problem-box">
+                    <p><strong>Ejercicio 3:</strong> ¿Cual es el valor de la $[H_3O^+]$ y el pH de una solución saturada de $Ba(OH)_2$ que contiene 3,9 gramos de $Ba(OH)_2$ por 100 mL de solución? (Masas: Ba=137, O=16, H=1)</p>
+                    <details class="solution">
+                        <summary>Ver desarrollo matemático</summary>
+                        <p>1. Masa molar $Ba(OH)_2 = 137 + 2(16) + 2(1) = 171 \text{ g/mol}$</p>
+                        <p>2. Moles = $3.9 / 171 = 0.0228 \text{ mol}$ en 0.1 L $\rightarrow [Ba(OH)_2] = 0.228 \text{ M}$</p>
+                        <p>3. $Ba(OH)_2 \rightarrow Ba^{2+} + 2OH^- \Rightarrow [OH^-] = 2 \times 0.228 = 0.456 \text{ M}$</p>
+                        <p>4. $pOH = -\log(0.456) = 0.34 \Rightarrow pH = 14 - 0.34 = \mathbf{13.66}$</p>
+                        <p>5. $[H_3O^+] = 10^{-13.66} = \mathbf{2.19 \times 10^{-14} \text{ M}}$</p>
+                    </details>
+                </div>
+            </div>
+
+            <!-- SUB: DEBILES -->
+            <div id="sub-debiles" class="tab-content">
+                <h3>🪫 Ácidos y Bases Débiles</h3>
+                <p>Se ionizan <strong>parcialmente</strong>. El grado de ionización depende de la constante de equilibrio ($K_a$ o $K_b$). A menor constante, más débil es la especie.</p>
+                
+                <div class="tip-box">
+                    <strong>Ácido Débil:</strong><br>
+                    $$HA(ac) + H_2O(l) \rightleftharpoons H_3O^+(ac) + A^-(ac)$$                     $$K_a = \frac{[H_3O^+][A^-]}{[HA]}$$                 </div>
+                <div class="tip-box">
+                    <strong>Base Débil:</strong><br>
+                    $$B(ac) + H_2O(l) \rightleftharpoons HB^+(ac) + OH^-(ac)$$                     $$K_b = \frac{[HB^+][OH^-]}{[B]}$$                 </div>
+
+                <div class="problem-box">
+                    <p><strong>Ejemplo (Ácido Débil):</strong> El ácido nicotínico ($C_6H_4NO_2H$, abreviado HA) es monoprótico débil. Calcule el pH y su porcentaje de disociación para una solución 0,01 M. $K_a = 1,4 \times 10^{-5}$.</p>
+                    <details class="solution">
+                        <summary>Ver desarrollo matemático</summary>
+                        <p>Equilibrio: $HA \rightleftharpoons H^+ + A^-$</p>
+                        <p>ICE: Inicio 0.01M, 0, 0. Cambio: -x, +x, +x. Equilibrio: 0.01-x, x, x.</p>
+                        <p>$K_a = \frac{x \cdot x}{0.01 - x} \approx \frac{x^2}{0.01} = 1.4 \times 10^{-5}$ (Aproximación válida ya que $x$ será muy pequeño).</p>
+                        <p>$x^2 = 1.4 \times 10^{-7} \Rightarrow x = [H_3O^+] = 3.74 \times 10^{-4} \text{ M}$</p>
+                        <p>$pH = -\log(3.74 \times 10^{-4}) = \mathbf{3.43}$</p>
+                        <p>% Disociación $= (x / 0.01) \times 100 = (3.74 \times 10^{-4} / 0.01) \times 100 = \mathbf{3.74\%}$</p>
+                    </details>
+                </div>
+
+                <div class="problem-box">
+                    <p><strong>Ejemplo (Base Débil):</strong> Calcule el pH de una solución de piridina 0,02 M. $K_b = 1,7 \times 10^{-9}$.</p>
+                    <details class="solution">
+                        <summary>Ver desarrollo matemático</summary>
+                        <p>$C_5H_5N + H_2O \rightleftharpoons C_5H_5NH^+ + OH^-$</p>
+                        <p>$K_b = \frac{x^2}{0.02 - x} \approx \frac{x^2}{0.02} = 1.7 \times 10^{-9}$</p>
+                        <p>$x^2 = 3.4 \times 10^{-11} \Rightarrow x = [OH^-] = 5.83 \times 10^{-6} \text{ M}$</p>
+                        <p>$pOH = -\log(5.83 \times 10^{-6}) = 5.23 \Rightarrow pH = 14 - 5.23 = \mathbf{8.77}$</p>
+                    </details>
+                </div>
+
+                <div class="problem-box">
+                    <p><strong>Ejemplo (Dilución):</strong> Un vinagre tiene 5,6% en masa de ácido acético ($HC_2H_3O_2$) y densidad 1,11 g/mL. ¿Qué volumen de este vinagre debe diluirse en agua para obtener 750 ml de una solución de pH 3,52? $K_a = 1,8 \times 10^{-5}$</p>
+                    <details class="solution">
+                        <summary>Ver desarrollo matemático</summary>
+                        <p>1. pH final deseado = 3.52 $\Rightarrow [H_3O^+]_{final} = 10^{-3.52} = 3.02 \times 10^{-4} \text{ M}$</p>
+                        <p>2. Usando $K_a$ para la solución diluida: $\frac{x^2}{C - x} = 1.8 \times 10^{-5}$. Como $x = 3.02 \times 10^{-4}$, despejamos C (Molaridad final):</p>
+                        <p>$C = \frac{(3.02 \times 10^{-4})^2}{1.8 \times 10^{-5}} + 3.02 \times 10^{-4} = 5.06 \times 10^{-3} + 3.02 \times 10^{-4} = 5.36 \times 10^{-3} \text{ M}$</p>
+                        <p>3. Moles necesarios en 750 mL: $0.75 \text{ L} \times 5.36 \times 10^{-3} \text{ mol/L} = 4.02 \times 10^{-3} \text{ mol}$</p>
+                        <p>4. Molaridad del vinagre puro: $\frac{5.6 \text{ g}/ 60 \text{ g/mol}}{100 \text{ g} / 1.11 \text{ g/mL} \times (1 \text{ L}/ 1000 \text{ mL})} = 1.036 \text{ M}$</p>
+                        <p>5. Volumen de vinagre puro = Moles / M = $4.02 \times 10^{-3} / 1.036 = \mathbf{3.88 \text{ mL}}$</p>
+                    </details>
+                </div>
+                
+                <div class="img-container">
+                    <!-- IMAGEN SOLICITADA 4: Estructura química de la piridina y el ácido nicotínico -->
+                    <img src="clase7-estructuras-debiles.jpg" alt="Estructuras de ácido nicotínico y piridina" class="molecule-img">
+                    <p class="img-caption">Figura 4: Estructuras de ácidos y bases débiles orgánicos comunes.</p>
+                </div>
+            </div>
+
+            <!-- SUB: POLIPROTICOS -->
+            <div id="sub-polipro" class="tab-content">
+                <h3>🧬 Ácidos Polipróticos</h3>
+                <div class="info-box">
+                    <p>Son ácidos de Bronsted-Lowry que pueden donar <strong>más de un protón</strong> (ej: $H_2CO_3$, $H_3PO_4$). La disociación ocurre por pasos secuenciales.</p>
+                    <p>Siempre se cumple que $K_{a1} > K_{a2} > K_{a3}$, ya que es más difícil perder un protón de una especie cargada negativamente que de una neutra.</p>
+                </div>
+                
+                <h3>Ejemplo 1: Ácido Carbónico ($H_2CO_3$)</h3>
+                <div class="tip-box">
+                    1ra disociación: $H_2CO_3 + H_2O \rightleftharpoons H_3O^+ + HCO_3^- \quad K_{a1} = 4,3 \times 10^{-7}$<br>
+                    2da disociación: $HCO_3^- + H_2O \rightleftharpoons H_3O^+ + CO_3^{2-} \quad K_{a2} = 5,6 \times 10^{-11}$                 </div>
+
+                <div class="problem-box">
+                    <p><strong>Cálculo:</strong> Calcule el pH y las concentraciones de todas las especies en una solución de $H_2CO_3$ 0,5 M.</p>
+                    <details class="solution">
+                        <summary>Ver desarrollo completo</summary>
+                        <p><strong>Primera disociación:</strong> $K_{a1} = \frac{x \cdot x}{0.5 - x} \approx \frac{x^2}{0.5} = 4.3 \times 10^{-7}$</p>
+                        <p>$x = [H_3O^+] = [HCO_3^-] = 4.64 \times 10^{-4} \text{ M}$</p>
+                        <p><strong>Segunda disociación:</strong> $K_{a2} = \frac{[H_3O^+][CO_3^{2-}]}{[HCO_3^-]}$</p>
+                        <p>Como la 2da disociación es mínima, $[H_3O^+] \approx 4.64 \times 10^{-4}$ y $[HCO_3^-] \approx 4.64 \times 10^{-4}$</p>
+                        <p>$5.6 \times 10^{-11} = \frac{(4.64 \times 10^{-4})[CO_3^{2-}]}{4.64 \times 10^{-4}} \Rightarrow [CO_3^{2-}] = K_{a2} = 5.6 \times 10^{-11} \text{ M}$</p>
+                        <p><strong>pH</strong> $= -\log(4.64 \times 10^{-4}) = \mathbf{3.33}$</p>
+                    </details>
+                </div>
+
+                <h3>Ejemplo 2: Ácido Fosfórico ($H_3PO_4$)</h3>
+                <div class="tip-box">
+                    $K_{a1} = 7,5 \times 10^{-3}$, $K_{a2} = 6,2 \times 10^{-8}$, $K_{a3} = 4,8 \times 10^{-13}$                 </div>
+                <div class="problem-box">
+                    <p><strong>Cálculo:</strong> Calcule el pH y todas las especies en una solución de $H_3PO_4$ 0,3 M.</p>
+                    <details class="solution">
+                        <summary>Ver desarrollo completo</summary>
+                        <p><strong>1ra disociación:</strong> $\frac{x^2}{0.3 - x} = 7.5 \times 10^{-3}$. Aquí $x$ no es despreciable. Resolviendo la cuadrática: $x = [H_3O^+] = [H_2PO_4^-] = 0.044 \text{ M}$</p>
+                        <p><strong>2da disociación:</strong> $\frac{(0.044+y)y}{0.044-y} \approx \frac{0.044y}{0.044} = 6.2 \times 10^{-8} \Rightarrow y = [HPO_4^{2-}] = 6.2 \times 10^{-8} \text{ M}$</p>
+                        <p><strong>3ra disociación:</strong> $[PO_4^{3-}]$ es tan pequeña que resulta $5.92 \times 10^{-19} \text{ M}$.</p>
+                        <p><strong>pH</strong> $= -\log(0.044) = \mathbf{1.36}$</p>
+                    </details>
+                </div>
+                <div class="img-container">
+                    <!-- IMAGEN SOLICITADA 5: Esquema de las 3 disociaciones escalonadas del ácido fosfórico -->
+                    <img src="clase7-disociacion-fosforico.jpg" alt="Disociación escalonada del H3PO4" class="molecule-img">
+                    <p class="img-caption">Figura 5: Disociación escalonada de un ácido triprótico como el $H_3PO_4$.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ MAPA CONCEPTUAL ============ -->
+<section id="mapa" class="section">
+    <div class="card">
+        <h2>🗺️ Mapa Conceptual: Equilibrios Ácido-Base</h2>
+        <p style="margin-bottom:1rem;">Haz <strong>clic en cada nodo</strong> para desplegar u ocultar sus ramas.</p>
+        <div class="map-container">
+            <ul class="map-tree">
+                <li class="has-children open">
+                    <div class="map-node root" onclick="toggleMap(this)">🧪 EQUILIBRIO ÁCIDO-BASE</div>
+                    <ul>
+                        <li class="has-children">
+                            <div class="map-node branch" onclick="toggleMap(this)">⚖️ Fuerza</div>
+                            <ul>
+                                <li><span class="map-leaf">Fuertes: Se disocian 100% (K -> ∞)</span></li>
+                                <li><span class="map-leaf">Débiles: Equilibrio (Ka o Kb)</span></li>
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <div class="map-node branch" onclick="toggleMap(this)">💧 Agua y pH</div>
+                            <ul>
+                                <li><span class="map-leaf">Kw = [H3O+][OH-] = 1x10^-14</span></li>
+                                <li><span class="map-leaf">pH = -log[H3O+]</span></li>
+                                <li><span class="map-leaf">pH + pOH = 14</span></li>
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <div class="map-node branch" onclick="toggleMap(this)">🧬 Polipróticos</div>
+                            <ul>
+                                <li><span class="map-leaf">Disociación escalonada</span></li>
+                                <li><span class="map-leaf">Ka1 > Ka2 > Ka3</span></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ============ FLASHCARDS ============ -->
+<section id="flashcards" class="section">
+    <div class="card">
+        <h2>🃏 Flashcards: Equilibrios</h2>
+        <p>Haz <strong>clic en la tarjeta</strong> para voltearla.</p>
+        <div class="fc-stats">
+            <span class="fc-stat good">✅ Buenas: <span id="fc-good">0</span></span>
+            <span class="fc-stat bad">❌ Malas: <span id="fc-bad">0</span></span>
+            <span class="fc-stat pending">⏳ Pendientes: <span id="fc-left">0</span></span>
+        </div>
+        <div class="fc-progress"><div class="fc-progress-bar" id="fc-bar"></div></div>
+        <div class="flashcard-scene" id="fc-scene">
+            <div class="flashcard" id="fc-card" onclick="flipCard()">
+                <div class="fc-face fc-front">
+                    <div class="fc-label">PREGUNTA</div>
+                    <div id="fc-question"></div>
+                    <span class="fc-hint">Clic para voltear ✨</span>
+                </div>
+                <div class="fc-face fc-back">
+                    <div class="fc-label">RESPUESTA</div>
+                    <div id="fc-answer"></div>
+                </div>
+            </div>
+        </div>
+        <div class="fc-controls" id="fc-controls">
+            <button class="fc-btn good" id="btn-fc-good" onclick="gradeCard(true)" disabled>✅ La sabía</button>
+            <button class="fc-btn bad" id="btn-fc-bad" onclick="gradeCard(false)" disabled>❌ No la sabía</button>
+        </div>
+        <div style="text-align:center;">
+            <button class="calc-button" onclick="resetFlashcards()">🔄 Reiniciar</button>
+        </div>
+    </div>
+</section>
+
+<!-- ============ HERRAMIENTAS ============ -->
+<section id="calculadoras" class="section">
+    <div class="card">
+        <h2>🧮 Herramientas Interactivas</h2>
+        <div id="herramientas-tabs" class="tab-group">
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('herramientas-tabs','calc-ph', this)">🌡️ Calc pH</button>
+                <button class="tab" onclick="showTab('herramientas-tabs','calc-weak', this)">🪫 Calc Ácido Débil</button>
+            </div>
+
+            <div id="calc-ph" class="tab-content active">
+                <div class="calculator">
+                    <div class="calc-title">🌡️ Calculadora de pH / pOH</div>
+                    <p>Ingresa la concentración de $H_3O^+$ o $OH^-$ para una solución de Ácido o Base Fuerte.</p>
+                    <div class="calc-input-group"><label>Tipo de especie:</label><select id="tipo-fuerte"><option value="acido">Ácido Fuerte (da [H3O+])</option><option value="base">Base Fuerte (da [OH-])</option></select></div>
+                    <div class="calc-input-group"><label>Concentración Molar (M):</label><input type="number" id="conc-fuerte" value="0.01" step="0.001"></div>
+                    <div class="calc-input-group"><label>Factor estequiométrico (ej: 2 para Ca(OH)₂):</label><input type="number" id="factor-fuerte" value="1" step="1"></div>
+                    <button class="calc-button" onclick="calcularPHFuerte()">Calcular</button>
+                    <div id="res-ph-fuerte" class="calc-result"></div>
+                </div>
+            </div>
+
+            <div id="calc-weak" class="tab-content">
+                <div class="calculator">
+                    <div class="calc-title">🪫 Calculadora de Ácido/Base Débil (Aprox. 5%)</div>
+                    <p>Calcula el pH asumiendo que $x$ es despreciable frente a $C_i$.</p>
+                    <div class="calc-input-group"><label>Tipo:</label><select id="tipo-debil"><option value="acido">Ácido Débil (Ka)</option><option value="base">Base Débil (Kb)</option></select></div>
+                    <div class="calc-input-group"><label>Constante (Ka o Kb):</label><input type="number" id="k-debil" value="1.8e-5" step="1e-6"></div>
+                    <div class="calc-input-group"><label>Concentración Inicial (M):</label><input type="number" id="ci-debil" value="0.1" step="0.01"></div>
+                    <button class="calc-button" onclick="calcularDebil()">Calcular</button>
+                    <div id="res-debil" class="calc-result"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ APLICACIONES ============ -->
+<section id="aplicaciones" class="section">
+    <div class="card">
+        <h2>🏥 Aplicaciones en Ciencias de la Salud</h2>
+        <div class="pharma-box">
+            <h3>🩸 Equilibrio Ácido-Base en la Sangre</h3>
+            <p>El pH sanguíneo se mantiene en 7.4 principalmente por el sistema buffer ácido carbónico / bicarbonato:</p>
+            $$H_2CO_3(ac) \rightleftharpoons H^+(ac) + HCO_3^-(ac)$$             <p>Un aumento en la presión parcial de $CO_2$ (hipercapnia) desplaza el equilibrio hacia la derecha (Principio de Le Chatelier), aumentando $[H^+]$ y causando <strong>acidosis respiratoria</strong>. Los ácidos polipróticos como el $H_2CO_3$ son fundamentales para entender este sistema fisiológico.</p>
+        </div>
+        <div class="bio-box">
+            <h3>💊 Absorción de Fármacos</h3>
+            <p>La mayoría de los fármacos son ácidos o bases débiles. En el estómago (pH ~1.5), los ácidos débiles (como la aspirina, $pK_a = 3.5$) se encuentran mayormente en su forma no ionizada (liposoluble), por lo que se absorben rápidamente a través de la membrana gástrica. Las bases débiles se ionizan en el estómago y se absorben mejor en el intestino (pH ~6-7).</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============ MNEMOTECNIAS ============ -->
+<section id="mnemotecnias" class="section">
+    <div class="card">
+        <h2>🧠 Mnemotecnias</h2>
+        <div class="mnemonic-card">
+            <div class="mnemonic-title">Los 7 Ácidos Fuertes</div>
+            <p><strong>"Hermana, Brinda Islas Con Nitrógeno, Cloros Y Perros"</strong><br>
+            H (HCl, HBr, HI) + N (HNO₃) + C (HClO₃, HClO₄) + S (H₂SO₄ 1ra disociación)</p>
+        </div>
+        <div class="mnemonic-card">
+            <div class="mnemonic-title">Relación pH y Acidez</div>
+            <p><strong>"pH Bajo = Ácido FURIOSO"</strong><br>
+            A menor pH, mayor concentración de $H^+$, más fuerte es la acidez.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============ GLOSARIO ============ -->
+<section id="glosario" class="section">
+    <div class="card">
+        <h2>📖 Glosario</h2>
+        <div class="glossary-term" onclick="toggleGlossary(this)">
+            <strong>Efecto Nivelador del Agua</strong>
+            <div class="glossary-definition">El agua es un disolvente tan fuertemente básico que nivela la fuerza de todos los ácidos más fuertes que el $H_3O^+$ a la misma fuerza ácida en solución acuosa.</div>
+        </div>
+        <div class="glossary-term" onclick="toggleGlossary(this)">
+            <strong>Ácido Poliprótico</strong>
+            <div class="glossary-definition">Ácido capaz de donar más de un protón por molécula. La pérdida de protones ocurre en pasos secuenciales con constantes de acidez decrecientes ($K_{a1} > K_{a2}$).</div>
+        </div>
+        <div class="glossary-term" onclick="toggleGlossary(this)">
+            <strong>Porcentaje de Disociación</strong>
+            <div class="glossary-definition">Fracción de ácido o base que se ioniza en solución, multiplicada por 100. $\% = \frac{[H_3O^+]}{C_i} \times 100$.</div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ ERRORES COMUNES ============ -->
+<section id="errores" class="section">
+    <div class="card">
+        <h2>⚠️ Errores Comunes</h2>
+        <div class="error-card">
+            <div class="error-title">Error 1: Olvidar la estequiometría en bases fuertes</div>
+            <p>Para el $Ba(OH)_2$, la $[OH^-]$ NO es igual a la concentración de la base, sino el DOBLE.</p>
+            <div class="correction"><strong>Correcto:</strong> $Ba(OH)_2 \rightarrow Ba^{2+} + 2OH^- \Rightarrow [OH^-] = 2 \times [Ba(OH)_2]$</div>
+        </div>
+        <div class="error-card">
+            <div class="error-title">Error 2: Restar el "x" en ácidos débiles cuando no es necesario</div>
+            <p>En la expresión $K_a = \frac{x^2}{C_i - x}$, si $C_i / K_a > 100$ (o incluso 1000), la aproximación $C_i - x \approx C_i$ es válida y evita resolver la cuadrática.</p>
+            <div class="correction"><strong>Regla práctica:</strong> Siempre verificar si la aproximación es válida. Si el % de disociación < 5%, la aproximación es correcta.</div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ BIBLIOGRAFIA ============ -->
+<section id="bibliografia" class="section">
+    <div class="card">
+        <h2>📚 Bibliografía</h2>
+        <ul>
+            <li>Chang, R., & Goldsby, K. A. (2017). <em>Química</em> (12va ed.). McGraw-Hill Interamericana. Capítulos 15 y 16.</li>
+            <li>Brady, J. E., Senese, F., & Alexander, G. S. (2017). <em>Chemistry: Matter and Its Changes</em> (7th ed.). Wiley.</li>
+        </ul>
+    </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section id="quiz" class="section">
+    <div class="card">
+        <h2>🎯 Quiz de Autoevaluación</h2>
+        <div class="quiz-container" id="quiz-box">
+            <div class="quiz-progress"><div class="quiz-progress-bar-bg"><div class="quiz-progress-bar" id="quiz-bar"></div></div></div>
+            <div id="quiz-content"></div>
+            <div class="quiz-stats" id="quiz-stats" style="display:none;">
+                <span class="quiz-stat" style="background:#38a169">✅ Correctas: <span id="quiz-correct">0</span></span>
+                <span class="quiz-stat" style="background:#e53e3e">❌ Incorrectas: <span id="quiz-incorrect">0</span></span>
+            </div>
+            <button class="calc-button" onclick="resetQuiz()" style="display:none; margin-top:1rem;" id="btn-reset-quiz">🔄 Reiniciar Quiz</button>
+        </div>
+    </div>
+</section>
+
+</div>
+
+<footer class="footer">
+    <p>&copy; 2024 Química II - Plataforma Educativa Universitaria | Clase 7</p>
+</footer>
+
+<script>
+// --- Navegación y Tabs ---
+function showSection(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    if(btn) btn.classList.add('active');
+    window.scrollTo(0,0);
+}
+function showTab(groupId, tabId, btn) {
+    const group = document.getElementById(groupId);
+    group.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+    group.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
+    if(window.MathJax) MathJax.typeset();
+}
+
+// --- Mapa Conceptual ---
+function toggleMap(el) {
+    el.parentElement.classList.toggle('open');
+}
+
+// --- Glosario ---
+function toggleGlossary(el) {
+    el.querySelector('.glossary-definition').classList.toggle('show');
+}
+
+// --- Flashcards ---
+const flashcards = [
+    {q: "¿Qué es el $K_w$ y cuánto vale a 25°C?", a: "Es la constante del producto iónico del agua. $K_w = [H_3O^+][OH^-] = 1.0 \\times 10^{-14}$"},
+    {q: "Ecuación de pH", a: "$pH = -\\log[H_3O^+]$"},
+    {q: "Relación entre pH y pOH", a: "$pH + pOH = 14$ (a 25°C)"},
+    {q: "¿Por qué $K_{a1} > K_{a2}$ en polipróticos?", a: "Es más difícil perder un protón de una especie ya cargada negativamente (mayor atracción electrostática) que de una neutra."},
+    {q: "¿Cuál es la base conjugada más fuerte de: HCl, HClO, HNO3?", a: "ClO⁻. Porque su ácido conjugado (HClO) es el más débil del grupo."},
+    {q: "Aproximación en ácidos débiles", a: "Si $C_i / K_a > 100$, podemos asumir $C_i - x \\approx C_i$, evitando la ecuación cuadrática."}
+];
+let fcIdx = 0, fcGood = 0, fcBad = 0, fcLeft = flashcards.length;
+
+function updateFcStats() {
+    document.getElementById('fc-good').innerText = fcGood;
+    document.getElementById('fc-bad').innerText = fcBad;
+    document.getElementById('fc-left').innerText = fcLeft;
+    document.getElementById('fc-bar').style.width = ((fcGood+fcBad)/flashcards.length * 100) + '%';
+}
+
+function loadCard() {
+    if(fcIdx >= flashcards.length) {
+        document.getElementById('fc-question').innerHTML = "¡Terminaste las flashcards!";
+        document.getElementById('fc-answer').innerHTML = "Revisa tus estadísticas arriba.";
+        document.getElementById('btn-fc-good').disabled = true;
+        document.getElementById('btn-fc-bad').disabled = true;
+        return;
+    }
+    const card = flashcards[fcIdx];
+    document.getElementById('fc-question').innerHTML = card.q;
+    document.getElementById('fc-answer').innerHTML = card.a;
+    document.getElementById('fc-card').classList.remove('flipped');
+    document.getElementById('btn-fc-good').disabled = true;
+    document.getElementById('btn-fc-bad').disabled = true;
+    if(window.MathJax) MathJax.typeset();
+}
+
+function flipCard() {
+    const card = document.getElementById('fc-card');
+    card.classList.toggle('flipped');
+    if(card.classList.contains('flipped')) {
+        document.getElementById('btn-fc-good').disabled = false;
+        document.getElementById('btn-fc-bad').disabled = false;
+    }
+}
+
+function gradeCard(isGood) {
+    if(isGood) fcGood++; else fcBad++;
+    fcLeft--;
+    fcIdx++;
+    updateFcStats();
+    loadCard();
+}
+
+function resetFlashcards() {
+    fcIdx=0; fcGood=0; fcBad=0; fcLeft=flashcards.length;
+    updateFcStats(); loadCard();
+}
+
+// --- Calculadoras ---
+function calcularPHFuerte() {
+    const tipo = document.getElementById('tipo-fuerte').value;
+    const conc = parseFloat(document.getElementById('conc-fuerte').value);
+    const factor = parseFloat(document.getElementById('factor-fuerte').value);
+    let pH, pOH, h3o, oh;
+    
+    if(tipo === 'acido') {
+        h3o = conc * factor;
+        pH = -Math.log10(h3o);
+        pOH = 14 - pH;
+        oh = Math.pow(10, -pOH);
+    } else {
+        oh = conc * factor;
+        pOH = -Math.log10(oh);
+        pH = 14 - pOH;
+        h3o = Math.pow(10, -pH);
+    }
+    
+    const res = document.getElementById('res-ph-fuerte');
+    res.innerHTML = `<strong>Resultados:</strong><br> [H₃O⁺] = ${h3o.toExponential(2)} M<br> [OH⁻] = ${oh.toExponential(2)} M<br> pH = ${pH.toFixed(2)}<br> pOH = ${pOH.toFixed(2)}`;
+    res.classList.add('show');
+}
+
+function calcularDebil() {
+    const tipo = document.getElementById('tipo-debil').value;
+    const K = parseFloat(document.getElementById('k-debil').value);
+    const Ci = parseFloat(document.getElementById('ci-debil').value);
+    
+    // Aprox: x = sqrt(K * Ci)
+    let x = Math.sqrt(K * Ci);
+    let pH, species;
+    
+    if(tipo === 'acido') {
+        pH = -Math.log10(x);
+        species = `[H₃O⁺] = ${x.toExponential(2)} M`;
+    } else {
+        let pOH = -Math.log10(x);
+        pH = 14 - pOH;
+        species = `[OH⁻] = ${x.toExponential(2)} M`;
+    }
+    
+    let validation = (x / Ci) * 100;
+    
+    const res = document.getElementById('res-debil');
+    res.innerHTML = `<strong>Resultados (Aprox):</strong><br> ${species}<br> pH = ${pH.toFixed(2)}<br> % Ionización = ${validation.toFixed(2)}% <br><em>(${validation < 5 ? 'Aproximación válida' : 'CUIDADO: Ionización > 5%. Debe usarse cuadrática')})</em>`;
+    res.classList.add('show');
+}
+
+// --- Quiz ---
+const quizData = [
+    {q: "¿Cuál es el pH de una solución 0.001 M de HCl?", options: ["1", "3", "11", "0.001"], correct: 1, exp: "HCl es fuerte. [H+] = 0.001 = 10^-3. pH = -log(10^-3) = 3."},
+    {q: "Si el pH de una solución es 5, ¿cuál es su [OH-]?", options: ["10^-5 M", "10^-9 M", "10^-14 M", "10^-7 M"], correct: 1, exp: "pOH = 14 - 5 = 9. [OH-] = 10^-9 M."},
+    {q: "¿Cuál de estos NO es un ácido fuerte?", options: ["HNO3", "HCl", "HClO", "HI"], correct: 2, exp: "HClO (ácido hipocloroso) es un ácido débil oxácido. Los demás son hidrácidos fuertes o ácidos oxácidos fuertes."},
+    {q: "Para un ácido poliprótico, ¿cuál es la relación entre sus constantes?", options: ["Ka1 < Ka2 < Ka3", "Ka1 = Ka2 = Ka3", "Ka1 > Ka2 > Ka3", "No tienen relación"], correct: 2, exp: "Siempre es más difícil perder un protón de una especie cargada, por lo que Ka1 > Ka2 > Ka3."},
+    {q: "En la 2da disociación del H2CO3, la concentración de CO3(2-) es aproximadamente igual a:", options: ["Ka1", "Ka2", "[H3O+]", "0 M"], correct: 1, exp: "Regla útil: Para ácidos dipróticos donde Ka1 >> Ka2, [A2-] ≈ Ka2."}
+];
+let quizIdx = 0, quizCorrect = 0, quizIncorrect = 0;
+
+function loadQuiz() {
+    const container = document.getElementById('quiz-content');
+    if(quizIdx >= quizData.length) {
+        document.getElementById('quiz-stats').style.display = 'flex';
+        document.getElementById('btn-reset-quiz').style.display = 'inline-block';
+        document.getElementById('quiz-correct').innerText = quizCorrect;
+        document.getElementById('quiz-incorrect').innerText = quizIncorrect;
+        container.innerHTML = "<h3 style='color:#D97706; text-align:center;'>Quiz Finalizado</h3>";
+        return;
+    }
+    const q = quizData[quizIdx];
+    let html = `<div class="quiz-question-card"><div class="quiz-question">${quizIdx+1}. ${q.q}</div><div class="quiz-options">`;
+    q.options.forEach((opt, i) => {
+        html += `<button class="quiz-option" onclick="checkQuiz(${i}, ${q.correct}, this)">${opt}</button>`;
+    });
+    html += `</div><div class="quiz-explanation" id="quiz-exp-${quizIdx}">${q.exp}</div></div>`;
+    container.innerHTML = html;
+    document.getElementById('quiz-bar').style.width = (quizIdx/quizData.length * 100) + '%';
+}
+
+function checkQuiz(selected, correct, btn) {
+    const parent = btn.closest('.quiz-question-card');
+    const opts = parent.querySelectorAll('.quiz-option');
+    opts.forEach(o => o.disabled = true);
+    
+    if(selected === correct) {
+        btn.classList.add('correct');
+        quizCorrect++;
+    } else {
+        btn.classList.add('incorrect');
+        opts[correct].classList.add('correct');
+        quizIncorrect++;
+    }
+    document.getElementById(`quiz-exp-${quizIdx}`).style.display = 'block';
+    quizIdx++;
+    setTimeout(loadQuiz, 2000);
+}
+
+function resetQuiz() {
+    quizIdx=0; quizCorrect=0; quizIncorrect=0;
+    document.getElementById('quiz-stats').style.display = 'none';
+    document.getElementById('btn-reset-quiz').style.display = 'none';
+    loadQuiz();
+}
+
+// Init
+window.onload = () => {
+    updateFcStats();
+    loadCard();
+    loadQuiz();
+    if(window.MathJax) MathJax.typeset();
+};
+</script>
+</body>
+</html>
