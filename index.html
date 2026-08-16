@@ -30,8 +30,8 @@
 
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%); color: var(--text); line-height: 1.6; overflow-x: hidden; }
     header { background: linear-gradient(135deg, var(--QII-dark) 0%, var(--QII-blue) 100%); color: var(--white); padding: 2rem; text-align: center; box-shadow: 0 6px 20px var(--shadow); position: relative; overflow: hidden; border-bottom: 5px solid var(--QII-gold); }
-    .-container { display: flex; align-items: center; justify-content: center; gap: 2rem; margin-bottom: 1rem; flex-wrap: wrap; }
-    .-qii { width: 120px; height: auto; background: var(--white); border-radius: 50%; padding: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+    .logo-container { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .logo-qii { width: 120px; height: auto; background: var(--white); border-radius: 50%; padding: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
     h1 { font-size: 2.5rem; margin-bottom: 0.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); color: var(--QII-gold); }
     .subtitle { font-size: 1.2rem; opacity: 0.95; font-weight: 300; }
     .nav-container { background: var(--QII-dark); padding: 1rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 12px var(--shadow); border-bottom: 2px solid var(--QII-gold); }
@@ -868,6 +868,17 @@
         loadQuiz();
     }
 
+    // ============================================================
+    //  AMPLIAR IMÁGENES AL HACER CLIC (abrir en nueva pestaña)
+    // ============================================================
+    const imagenes = document.querySelectorAll('.img-container img, .molecule-img');
+    imagenes.forEach(img => {
+        img.style.cursor = 'pointer';
+        img.addEventListener('click', function(e) {
+            window.open(this.src, '_blank');
+        });
+    });
+
     // ======================== INICIALIZACIÓN CON DOMContentLoaded ========================
     document.addEventListener('DOMContentLoaded', function() {
         // 1. Navegación principal: botones con data-section
@@ -913,23 +924,6 @@
         updateFcStats();
         loadCard();
         loadQuiz();
-
-       // ============================================================
-        //  AMPLIAR IMÁGENES AL HACER CLIC
-        // ============================================================
-        document.addEventListener('DOMContentLoaded', function() {
-            // Selecciona todas las imágenes que están dentro de contenedores .img-container
-            // y también las que tengan clase 'molecule-img' (por si están fuera)
-            const imagenes = document.querySelectorAll('.img-container img, .molecule-img');
-            imagenes.forEach(img => {
-                // Cambia el cursor para indicar que es clickeable
-                img.style.cursor = 'pointer';
-                img.addEventListener('click', function(e) {
-                    // Abre la imagen en una nueva pestaña/ventana
-                    window.open(this.src, '_blank');
-                });
-            });
-        });
 
         // 9. Asegurar que la primera pestaña de conceptos y herramientas esté activa
         // (ya lo están por clase active en HTML, pero por si acaso)
