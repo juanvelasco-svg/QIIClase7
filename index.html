@@ -152,9 +152,7 @@
 
 <header>
     <div class="logo-container">
-        <!-- LOGO: Usar el mismo archivo Logo-QII.png (comentado si no existe) -->
         <img src="Logo-QII.png" alt="Logo QII" class="logo-qii">
-        <div style="background:#fff; border-radius:50%; padding:10px; width:120px; height:120px; display:flex; align-items:center; justify-content:center; font-size:2.5rem; color:var(--QII-dark); font-weight:bold;">QII</div>
         <div>
             <h1>QUÍMICA II</h1>
             <p class="subtitle">Unidad 3: Equilibrios</p>
@@ -916,11 +914,20 @@
         loadCard();
         loadQuiz();
 
-        // 8. (Opcional) Clic en imágenes para abrir en nueva pestaña (si existen)
-        document.querySelectorAll('.img-container img, .molecule-img').forEach(img => {
-            img.style.cursor = 'pointer';
-            img.addEventListener('click', function() {
-                window.open(this.src, '_blank');
+       // ============================================================
+        //  AMPLIAR IMÁGENES AL HACER CLIC
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Selecciona todas las imágenes que están dentro de contenedores .img-container
+            // y también las que tengan clase 'molecule-img' (por si están fuera)
+            const imagenes = document.querySelectorAll('.img-container img, .molecule-img');
+            imagenes.forEach(img => {
+                // Cambia el cursor para indicar que es clickeable
+                img.style.cursor = 'pointer';
+                img.addEventListener('click', function(e) {
+                    // Abre la imagen en una nueva pestaña/ventana
+                    window.open(this.src, '_blank');
+                });
             });
         });
 
