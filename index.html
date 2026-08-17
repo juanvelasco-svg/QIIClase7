@@ -889,6 +889,10 @@
             btn.addEventListener('click', function(e) {
                 const sectionId = this.dataset.section;
                 showSection(sectionId);
+                // Recargar quiz si se navega a esa sección
+                if(sectionId === 'quiz') {
+                    loadQuiz();
+                }
             });
         });
 
@@ -926,7 +930,8 @@
         // 7. Inicializar flashcards y quiz
         updateFcStats();
         loadCard();
-        loadQuiz();
+        // NO cargar el quiz al inicio para evitar que se renderice antes de tiempo
+        // El quiz se cargará cuando el usuario haga clic en la pestaña "🎯 Quiz"
 
         // 9. Asegurar que la primera pestaña de conceptos y herramientas esté activa
         // (ya lo están por clase active en HTML, pero por si acaso)
