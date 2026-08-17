@@ -652,10 +652,15 @@
         <h2>🎯 Quiz de Autoevaluación</h2>
         <div class="quiz-container" id="quiz-box">
             <div class="quiz-progress"><div class="quiz-progress-bar-bg"><div class="quiz-progress-bar" id="quiz-bar"></div></div></div>
+            <div class="quiz-stats" id="quiz-stats-inline" style="display:flex; justify-content:space-between; margin-bottom:1rem; font-size:0.95rem;">
+                <span style="color:#D97706; font-weight:700;">Pregunta: <span id="quiz-current">1</span> de <span id="quiz-total">5</span></span>
+                <span style="color:#38a169; font-weight:700;">Puntaje: <span id="quiz-score">0</span> pts</span>
+            </div>
             <div id="quiz-content"></div>
             <div class="quiz-stats" id="quiz-stats" style="display:none;">
                 <span class="quiz-stat" style="background:#38a169">✅ Correctas: <span id="quiz-correct">0</span></span>
                 <span class="quiz-stat" style="background:#e53e3e">❌ Incorrectas: <span id="quiz-incorrect">0</span></span>
+                <span class="quiz-stat" style="background:var(--QII-blue)">🏆 Puntaje Final: <span id="quiz-final-score">0</span> pts</span>
             </div>
             <button class="calc-button" id="resetQuizBtn" style="display:none; margin-top:1rem;">🔄 Reiniciar Quiz</button>
         </div>
@@ -819,11 +824,19 @@
     function loadQuiz() {
         const container = document.getElementById('quiz-content');
         if (!container) return;
+        
+        // Actualizar contadores visibles
+        document.getElementById('quiz-current').innerText = Math.min(quizIdx + 1, quizData.length);
+        document.getElementById('quiz-total').innerText = quizData.length;
+        document.getElementById('quiz-score').innerText = quizCorrect * 20; // 20 pts por pregunta
+        
         if(quizIdx >= quizData.length) {
+            document.getElementById('quiz-stats-inline').style.display = 'none';
             document.getElementById('quiz-stats').style.display = 'flex';
             document.getElementById('resetQuizBtn').style.display = 'inline-block';
             document.getElementById('quiz-correct').innerText = quizCorrect;
             document.getElementById('quiz-incorrect').innerText = quizIncorrect;
+            document.getElementById('quiz-final-score').innerText = quizCorrect * 20;
             container.innerHTML = "<h3 style='color:#D97706; text-align:center;'>Quiz Finalizado</h3>";
             return;
         }
@@ -834,7 +847,7 @@
         });
         html += `</div><div class="quiz-explanation" id="quiz-exp-${quizIdx}">${q.exp}</div></div>`;
         container.innerHTML = html;
-        document.getElementById('quiz-bar').style.width = (quizIdx/quizData.length * 100) + '%';
+        document.getElementById('quiz-bar').style.width = ((quizIdx)/quizData.length * 100) + '%';
         
         // Añadir event listeners a las opciones
         container.querySelectorAll('.quiz-option').forEach(btn => {
@@ -868,6 +881,10 @@
         quizIncorrect = 0;
         document.getElementById('quiz-stats').style.display = 'none';
         document.getElementById('resetQuizBtn').style.display = 'none';
+        document.getElementById('quiz-stats-inline').style.display = 'flex';
+        document.getElementById('quiz-current').innerText = '1';
+        document.getElementById('quiz-total').innerText = quizData.length;
+        document.getElementById('quiz-score').innerText = '0';
         loadQuiz();
     }
 
