@@ -30,7 +30,7 @@
 
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%); color: var(--text); line-height: 1.6; overflow-x: hidden; }
     header { background: linear-gradient(135deg, var(--QII-dark) 0%, var(--QII-blue) 100%); color: var(--white); padding: 2rem; text-align: center; box-shadow: 0 6px 20px var(--shadow); position: relative; overflow: hidden; border-bottom: 5px solid var(--QII-gold); }
-    .logo-container { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .logo-container { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
     .logo-qii { width: 120px; height: auto; background: var(--white); border-radius: 50%; padding: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
     h1 { font-size: 2.5rem; margin-bottom: 0.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); color: var(--QII-gold); }
     .subtitle { font-size: 1.2rem; opacity: 0.95; font-weight: 300; }
@@ -818,6 +818,7 @@
 
     function loadQuiz() {
         const container = document.getElementById('quiz-content');
+        if (!container) return;
         if(quizIdx >= quizData.length) {
             document.getElementById('quiz-stats').style.display = 'flex';
             document.getElementById('resetQuizBtn').style.display = 'inline-block';
@@ -862,7 +863,9 @@
     }
 
     function resetQuiz() {
-        quizIdx=0; quizCorrect=0; quizIncorrect=0;
+        quizIdx = 0; 
+        quizCorrect = 0; 
+        quizIncorrect = 0;
         document.getElementById('quiz-stats').style.display = 'none';
         document.getElementById('resetQuizBtn').style.display = 'none';
         loadQuiz();
